@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Together</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+  <body>
+    <!-- <div id="content" style="display: none;">
+      <h1>This is the content to render on canvas</h1>
+      <p>Make this visible only through canvas rendering.</p>
+    </div>
+    <canvas id="output-canvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </body>
+
+  <script>
+    const content = document.getElementById("content");
+    const canvas = document.getElementById("output-canvas");
+
+    // Temporarily show the hidden element
+    content.style.display = "block";
+
+    // Render using html2canvas
+    html2canvas(content)
+      .then((renderedCanvas) => {
+        // Set canvas dimensions to match the rendered content
+        canvas.width = renderedCanvas.width;
+        canvas.height = renderedCanvas.height;
+
+        // Draw the rendered content on the output canvas
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(renderedCanvas, 0, 0);
+
+        // Hide the original content again
+        content.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Error rendering with html2canvas:", error);
+      });
+
+
+  </script> -->
+
+    <!-- <div id="encrypted-url" data-url="U2FsdGVkX19...encrypted-text"></div> -->
+    <!-- <iframe
+      id="hidden-frame"
+      style="display: none"
+      width="560"
+      height="315"
+    ></iframe> -->
+    <iframe
+      id="hidden-frame"
+      width="560"
+      height="315"
+      src="http://localhost:4200"
+    ></iframe>
+    <canvas id="canvas"></canvas>
+  </body>
+
+  <script>
+    // Decrypt the URL
+    // const encryptedData = document
+    //   .getElementById("encrypted-url")
+    //   .getAttribute("data-url");
+    // const secretKey = "my-secret-key";
+
+    // Decrypt the URL
+    // const decryptedUrl = CryptoJS.AES.decrypt(
+    //   encryptedData,
+    //   secretKey
+    // ).toString(CryptoJS.enc.Utf8);
+
+    // Set the decrypted URL as the iframe's src
+    const iframe = document.getElementById("hidden-frame");
+    // iframe.src = decryptedUrl;
+
+    // Render the iframe to a canvas if needed
+    iframe.onload = () => {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      console.log(iframe);
+
+      const content = iframe.contentWindow.document.getElementByTagName("body")[0];
+
+      // Example rendering logic (if possible, depends on content and CORS)
+      if (iframe && iframe.contentDocument && iframe.contentDocument.body) {
+        html2canvas(iframe.contentDocument.body)
+          .then((renderedCanvas) => {
+            canvas.width = renderedCanvas.width;
+            canvas.height = renderedCanvas.height;
+            ctx.drawImage(renderedCanvas, 0, 0);
+            
+            iframe.remove();
+          })
+          .catch((err) => console.error("Error rendering iframe:", err));
+      }
+    };
+
+    document.addEventListener("contextmenu", (event) => event.preventDefault());
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "F12") {
+        event.preventDefault();
+      }
+      if (event.ctrlKey && (event.key === "u" || event.key === "I", event.cm)) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</html>
